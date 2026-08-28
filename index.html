@@ -21,6 +21,7 @@
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -30,9 +31,12 @@
                     },
                     colors: {
                         wano: {
-                            bg: '#0c0714',
-                            night: '#160d24',
-                            card: '#1e1233',
+                            bg: 'var(--wano-bg)',
+                            night: 'var(--wano-night)',
+                            card: 'var(--wano-card)',
+                            border: 'var(--wano-border)',
+                            text: 'var(--wano-text)',
+                            subtext: 'var(--wano-subtext)',
                             purple: '#8b5cf6',
                             sakura: '#f472b6',
                             rose: '#fb7185',
@@ -42,6 +46,7 @@
                             red: '#dc2626',
                             jade: '#059669',
                             cyan: '#06b6d4',
+                            sky: '#0284c7'
                         }
                     },
                     boxShadow: {
@@ -56,22 +61,45 @@
     </script>
 
     <style>
+        :root {
+            /* Light Mode Theme Options (Flower Capital Daytime) */
+            --wano-bg: #fdf2f8;
+            --wano-night: #ffffff;
+            --wano-card: #fce7f3;
+            --wano-border: rgba(244, 114, 182, 0.4);
+            --wano-text: #1e1b4b;
+            --wano-subtext: #475569;
+            --wano-nav: rgba(255, 255, 255, 0.92);
+        }
+
+        .dark {
+            /* Dark Mode Theme Options (Night Onigashima Raid) */
+            --wano-bg: #0c0714;
+            --wano-night: #160d24;
+            --wano-card: #1e1233;
+            --wano-border: rgba(139, 92, 246, 0.3);
+            --wano-text: #f1f5f9;
+            --wano-subtext: #94a3b8;
+            --wano-nav: rgba(22, 13, 36, 0.90);
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0c0714;
-            color: #f1f5f9;
-            background-image: radial-gradient(circle at 20% 10%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-                              radial-gradient(circle at 80% 90%, rgba(244, 114, 182, 0.08) 0%, transparent 40%);
+            background-color: var(--wano-bg);
+            color: var(--wano-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            background-image: radial-gradient(circle at 20% 10%, rgba(244, 114, 182, 0.12) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 90%, rgba(245, 158, 11, 0.1) 0%, transparent 40%);
         }
 
         .glass-nav {
-            background: rgba(22, 13, 36, 0.90);
+            background: var(--wano-nav);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
         
         .glass-card {
-            background: rgba(30, 18, 51, 0.85);
+            background: var(--wano-card);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
@@ -91,7 +119,7 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0c0714;
+            background: var(--wano-bg);
         }
         ::-webkit-scrollbar-thumb {
             background: #f472b6;
@@ -102,18 +130,34 @@
         }
 
         .gold-gradient-text {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark .gold-gradient-text {
             background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fef08a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .sakura-gradient-text {
+            background: linear-gradient(135deg, #db2777 0%, #e11d48 50%, #ea580c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dark .sakura-gradient-text {
             background: linear-gradient(135deg, #f472b6 0%, #fb7185 50%, #f59e0b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .wano-hero-bg {
+            background: linear-gradient(135deg, #38bdf8 0%, #f472b6 40%, #fb7185 100%);
+        }
+
+        .dark .wano-hero-bg {
             background: linear-gradient(135deg, #2e1065 0%, #160d24 50%, #831843 100%);
         }
 
@@ -129,6 +173,21 @@
             animation: float-slow 4s ease-in-out infinite;
         }
 
+        /* Wano Torii Arch & Sakura Roof Aesthetics */
+        .wano-castle-banner {
+            background: linear-gradient(to bottom, rgba(12, 7, 20, 0.1), var(--wano-bg)),
+                        url('https://images.unsplash.com/photo-1528164344705-47542687990d?w=1600&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .dark .wano-castle-banner {
+            background: linear-gradient(to bottom, rgba(12, 7, 20, 0.7), var(--wano-bg)),
+                        url('https://images.unsplash.com/photo-1528164344705-47542687990d?w=1600&auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
         /* Falling Sakura Blossom Particle FX */
         .sakura-petal {
             position: fixed;
@@ -137,14 +196,14 @@
             z-index: 1;
             background: linear-gradient(135deg, #f472b6, #f43f5e);
             border-radius: 100% 0% 100% 0%;
-            opacity: 0.6;
+            opacity: 0.75;
             animation: fall 8s linear infinite;
         }
 
         @keyframes fall {
             0% {
                 transform: translateY(0vh) rotate(0deg) scale(0.8);
-                opacity: 0.8;
+                opacity: 0.85;
             }
             100% {
                 transform: translateY(105vh) rotate(360deg) scale(1.2);
@@ -160,14 +219,16 @@
         <div class="sakura-petal w-2 h-2" style="left: 30%; animation-duration: 12s; animation-delay: 2s;"></div>
         <div class="sakura-petal w-4 h-4" style="left: 55%; animation-duration: 10s; animation-delay: 1s;"></div>
         <div class="sakura-petal w-2.5 h-2.5" style="left: 80%; animation-duration: 11s; animation-delay: 3s;"></div>
+        <div class="sakura-petal w-3 h-3" style="left: 92%; animation-duration: 7s; animation-delay: 4s;"></div>
     </div>
 
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
-    <div id="whatsapp-cta-container" class="fixed bottom-6 left-6 z-40 flex flex-col items-start group">
+    <!-- MOVED WHATSAPP CALL TO ACTION BUTTON TO BOTTOM RIGHT SIDE -->
+    <div id="whatsapp-cta-container" class="fixed bottom-6 right-6 z-40 flex flex-col items-end group">
         
-        <!-- Den Den Mushi WhatsApp Chat Popup Card -->
-        <div id="whatsapp-chat-card" class="hidden mb-3 w-80 sm:w-88 bg-wano-night border-2 border-wano-sakura/60 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl transform transition-all duration-300 scale-95 opacity-0 origin-bottom-left">
+        <!-- Den Den Mushi WhatsApp Chat Popup Card (Bottom Right Aligned) -->
+        <div id="whatsapp-chat-card" class="hidden mb-3 w-80 sm:w-88 bg-wano-night border-2 border-wano-sakura/80 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl transform transition-all duration-300 scale-95 opacity-0 origin-bottom-right">
             <!-- Header -->
             <div class="bg-gradient-to-r from-wano-purple via-pink-600 to-wano-crimson p-4 text-white flex items-center justify-between">
                 <div class="flex items-center gap-3">
@@ -191,22 +252,22 @@
 
             <!-- Body Message -->
             <div class="p-4 bg-wano-bg/90 space-y-3 text-xs">
-                <div class="bg-wano-night border border-wano-purple/40 p-3 rounded-2xl rounded-tl-none space-y-1.5 relative shadow-inner">
+                <div class="bg-wano-night border border-wano-purple/40 p-3 rounded-2xl rounded-tr-none space-y-1.5 relative shadow-inner">
                     <p class="font-bold text-wano-gold text-[11px]"><i class="fa-solid fa-torii-gate mr-1 opacity-70"></i> Welcome to Wano Kuni!</p>
-                    <p class="text-slate-300 leading-relaxed">
-                        Need help finding Kozuki Oden's Enma, Gear 5 Nika Figures, or Wano Kimonos? Message me on <span class="text-emerald-400 font-bold">WhatsApp (+62 821-8039-7405)</span>!
+                    <p class="text-wano-text leading-relaxed">
+                        Need help finding Kozuki Oden's Enma, Gear 5 Nika Figures, or Wano Kimonos? Message me on <span class="text-emerald-500 font-bold">WhatsApp (+62 821-8039-7405)</span>!
                     </p>
-                    <span class="block text-[9px] text-slate-400 text-right font-mono">Flower Capital Hotline</span>
+                    <span class="block text-[9px] text-wano-subtext text-right font-mono">Flower Capital Hotline</span>
                 </div>
 
-                <div class="bg-emerald-950/40 border border-emerald-500/30 p-2.5 rounded-xl text-[11px] text-emerald-300 flex items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-lg"></i>
+                <div class="bg-emerald-500/10 border border-emerald-500/30 p-2.5 rounded-xl text-[11px] text-emerald-600 dark:text-emerald-300 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i>
                     <span>Wano Direct line: <strong>0821-8039-7405</strong></span>
                 </div>
             </div>
 
             <!-- CTA Action Footer -->
-            <div class="p-3 bg-wano-night border-t border-wano-purple/20">
+            <div class="p-3 bg-wano-night border-t border-wano-border">
                 <a href="https://wa.me/6282180397405?text=Konnichiwa%20Luffy-taro!%20I%20have%20a%20question%20about%20Wano%20Kuni%20merchandise!" 
                    target="_blank" 
                    rel="noopener noreferrer"
@@ -217,8 +278,15 @@
             </div>
         </div>
 
-        <!-- Luffy-Styled WhatsApp Floating Trigger Button -->
+        <!-- Luffy-Styled WhatsApp Floating Trigger Button (Bottom Right) -->
         <div class="relative flex items-center gap-3">
+
+            <!-- Tooltip Banner -->
+            <div class="hidden sm:flex items-center gap-2 bg-wano-night border border-wano-border backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-xl text-xs font-bold text-wano-text pointer-events-none group-hover/btn:border-wano-sakura transition-colors">
+                <span class="text-wano-sakura"><i class="fa-solid fa-torii-gate"></i></span>
+                <span class="samurai-title tracking-wide text-xs">Wano Hotline <span class="text-emerald-500 font-mono">(0821-8039-7405)</span></span>
+            </div>
+
             <button id="whatsapp-trigger-btn" class="relative group/btn focus:outline-none" title="Chat on WhatsApp with Luffy-taro (0821-8039-7405)">
                 <!-- Pulsing Glow Ring -->
                 <span class="absolute -inset-1 rounded-full bg-gradient-to-r from-wano-sakura via-wano-gold to-emerald-400 opacity-70 blur-md group-hover/btn:opacity-100 transition duration-500 animate-pulse"></span>
@@ -245,24 +313,19 @@
                     </span>
                 </div>
             </button>
-
-            <!-- Tooltip Banner -->
-            <div class="hidden sm:flex items-center gap-2 bg-wano-night/90 border border-wano-sakura/50 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-xl text-xs font-bold text-white pointer-events-none group-hover/btn:border-wano-sakura transition-colors">
-                <span class="text-wano-sakura"><i class="fa-solid fa-torii-gate"></i></span>
-                <span class="samurai-title tracking-wide text-xs">Wano Hotline <span class="text-emerald-400 font-mono">(0821-8039-7405)</span></span>
-            </div>
         </div>
     </div>
 
+    <!-- Announcement Bar -->
     <div class="bg-gradient-to-r from-wano-purple via-wano-sakura to-wano-crimson text-slate-950 text-xs font-black py-2 px-4 text-center tracking-wider flex justify-between items-center uppercase shadow-md">
-        <span class="hidden sm:inline"><i class="fa-solid fa-torii-gate mr-1"></i> WANO KUNI DISPATCH: FREE Shipping across Flower Capital on orders over ฿10,000 Berry!</span>
+        <span class="hidden sm:inline"><i class="fa-solid fa-torii-gate mr-1"></i> FLOWER CAPITAL CASTLE DISPATCH: FREE Shipping on orders over ฿10,000 Berry!</span>
         <span class="mx-auto sm:mx-0"><i class="fa-solid fa-fan mr-1"></i> USE CODE: <span class="bg-slate-950 text-wano-gold px-2 py-0.5 rounded font-mono font-bold">WANO10</span> FOR 10% OFF</span>
         <div class="hidden md:flex items-center gap-4 text-xs font-bold text-slate-950">
-            <span><i class="fa-solid fa-compact-disc mr-1"></i> Flower Capital Log Pose</span>
+            <span><i class="fa-solid fa-compact-disc mr-1"></i> Wano Kuni Log Pose</span>
         </div>
     </div>
 
-    <header class="sticky top-0 z-30 glass-nav border-b border-wano-purple/20 transition-all duration-300">
+    <header class="sticky top-0 z-30 glass-nav border-b border-wano-border transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
@@ -273,7 +336,7 @@
                             <i class="fa-solid fa-torii-gate text-2xl text-wano-gold animate-pulse"></i>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-2xl font-black tracking-wider text-white samurai-title flex items-center gap-1.5">
+                            <span class="text-xl sm:text-2xl font-black tracking-wider text-wano-text samurai-title flex items-center gap-1.5">
                                 FLOWER CAPITAL <span class="sakura-gradient-text">BAZAAR</span>
                             </span>
                             <span class="text-[10px] text-wano-gold uppercase tracking-widest font-extrabold -mt-1"><i class="fa-solid fa-fan mr-1"></i> Wano Kuni Official Store</span>
@@ -285,21 +348,27 @@
                 <div class="hidden md:flex flex-1 max-w-md mx-8">
                     <div class="relative w-full">
                         <input type="text" id="desktop-search" placeholder="Search Gear 5, Enma Katana, Kozuki Oden figures..." 
-                            class="w-full pl-10 pr-10 py-2.5 bg-wano-bg hover:bg-wano-night focus:bg-wano-bg text-sm rounded-full border border-wano-purple/30 focus:border-wano-sakura focus:outline-none transition-all duration-200 text-white placeholder-slate-400">
+                            class="w-full pl-10 pr-10 py-2.5 bg-wano-night hover:bg-wano-card focus:bg-wano-night text-sm rounded-full border border-wano-border focus:border-wano-sakura focus:outline-none transition-all duration-200 text-wano-text placeholder-wano-subtext">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-wano-sakura"></i>
                     </div>
                 </div>
 
-                <!-- Action Icons -->
-                <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Action Icons & Theme Mode Switcher -->
+                <div class="flex items-center gap-2 sm:gap-3">
+
+                    <!-- LIGHT / DARK MODE TOGGLE BUTTON -->
+                    <button id="theme-toggle-btn" class="p-2.5 text-wano-text hover:text-wano-gold hover:bg-wano-card rounded-full transition-colors flex items-center justify-center border border-wano-border" title="Toggle Light / Dark Wano Mode">
+                        <i id="theme-icon" class="fa-solid fa-moon text-lg text-wano-purple"></i>
+                    </button>
+
                     <!-- Wishlist Button -->
-                    <button id="wishlist-btn" class="relative p-2.5 text-slate-300 hover:text-wano-sakura hover:bg-wano-night rounded-full transition-colors" title="Bounty Wishlist">
+                    <button id="wishlist-btn" class="relative p-2.5 text-wano-text hover:text-wano-sakura hover:bg-wano-card rounded-full transition-colors" title="Bounty Wishlist">
                         <i class="fa-regular fa-heart text-xl"></i>
                         <span id="wishlist-count" class="absolute top-1 right-1 bg-wano-sakura text-slate-950 font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center scale-0 transition-transform duration-200">0</span>
                     </button>
 
                     <!-- Cart Button -->
-                    <button id="cart-toggle-btn" class="relative p-2.5 text-slate-200 hover:text-wano-gold hover:bg-wano-night rounded-full transition-colors flex items-center justify-center" title="Treasure Chest Cart">
+                    <button id="cart-toggle-btn" class="relative p-2.5 text-wano-text hover:text-wano-gold hover:bg-wano-card rounded-full transition-colors flex items-center justify-center" title="Treasure Chest Cart">
                         <div class="relative">
                             <i class="fa-solid fa-box-open text-xl"></i>
                             <span id="cart-badge" class="absolute -top-2 -right-2 bg-gradient-to-r from-wano-sakura to-wano-gold text-slate-950 font-black text-[11px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg scale-0 transition-transform duration-300">0</span>
@@ -307,11 +376,11 @@
                     </button>
 
                     <!-- Wano Captain Profile -->
-                    <button class="hidden sm:flex items-center gap-2 p-1.5 pl-2 pr-3 bg-wano-night hover:bg-wano-card text-white rounded-full transition-colors border border-wano-purple/30">
+                    <button class="hidden sm:flex items-center gap-2 p-1.5 pl-2 pr-3 bg-wano-night hover:bg-wano-card text-wano-text rounded-full transition-colors border border-wano-border">
                         <div class="w-7 h-7 rounded-full bg-wano-purple flex items-center justify-center text-xs font-bold text-white">
                             <i class="fa-solid fa-user-ninja text-wano-gold"></i>
                         </div>
-                        <span class="text-xs font-bold text-slate-200">Samurai Alex</span>
+                        <span class="text-xs font-bold">Samurai Alex</span>
                     </button>
                 </div>
             </div>
@@ -320,7 +389,7 @@
             <div class="pb-4 md:hidden">
                 <div class="relative w-full">
                     <input type="text" id="mobile-search" placeholder="Search Wano Kuni treasures..." 
-                        class="w-full pl-10 pr-4 py-2 bg-wano-bg text-sm rounded-full border border-wano-purple/30 focus:outline-none focus:border-wano-sakura text-white placeholder-slate-400">
+                        class="w-full pl-10 pr-4 py-2 bg-wano-night text-sm rounded-full border border-wano-border focus:outline-none focus:border-wano-sakura text-wano-text placeholder-wano-subtext">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-wano-sakura"></i>
                 </div>
             </div>
@@ -328,33 +397,34 @@
     </header>
 
     <main class="flex-grow">
-        <section class="relative overflow-hidden wano-hero-bg text-white py-12 md:py-20 my-4 mx-4 sm:mx-6 lg:mx-8 rounded-3xl border border-wano-purple/40 shadow-2xl">
+        <!-- WANO CASTLE & SAKURA FLOWER CAPITAL HERO BANNER -->
+        <section class="relative overflow-hidden wano-hero-bg wano-castle-banner text-white py-12 md:py-20 my-4 mx-4 sm:mx-6 lg:mx-8 rounded-3xl border border-wano-border shadow-2xl">
             <!-- Background FX -->
             <div class="absolute -top-32 -left-32 w-96 h-96 bg-wano-purple/30 rounded-full filter blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-wano-sakura/20 rounded-full filter blur-3xl pointer-events-none"></div>
 
             <div class="relative max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-wano-bg/90 border border-wano-gold/50 text-xs font-bold text-wano-gold shadow-glow-gold">
+                <div class="space-y-6 text-center lg:text-left backdrop-blur-sm bg-slate-950/40 p-6 sm:p-8 rounded-3xl border border-wano-sakura/30">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/80 border border-wano-gold/50 text-xs font-bold text-wano-gold shadow-glow-gold">
                         <i class="fa-solid fa-torii-gate text-wano-gold"></i>
-                        WANO KUNI ONIGASHIMA RAID EXCLUSIVE
+                        FLOWER CAPITAL & ONIGASHIMA RAID OFFICIAL BAZAAR
                     </div>
                     <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-none uppercase samurai-title">
                         CLAIM WANO'S <span class="sakura-gradient-text">SAMURAI & GOD</span> TREASURES
                     </h1>
-                    <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
-                        Equip your fleet with masterwork Sun God Nika Gear 5 statues, Kozuki Oden's legendary Enma Katana set, Kaido Dragon statues, and authentic Wano haori apparel!
+                    <p class="text-slate-200 text-base sm:text-lg max-w-xl mx-auto lg:mx-0">
+                        Equip your Mugiwara fleet with masterwork Sun God Nika Gear 5 statues, Kozuki Oden's legendary Enma Katana set, Kaido Dragon statues, and authentic Wano kimono apparel!
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                         <a href="#catalog" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-wano-purple via-pink-600 to-wano-crimson text-white font-extrabold text-sm hover:shadow-glow-sakura transition-all duration-300 transform hover:-translate-y-0.5 text-center">
                             Explore Wano Catalog <i class="fa-solid fa-fan ml-2"></i>
                         </a>
-                        <a href="#catalog" onclick="setCategoryFilter('Replica Weapons')" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-wano-bg hover:bg-wano-night border border-wano-purple/40 text-wano-gold font-bold text-sm transition-all duration-200 text-center">
+                        <a href="#catalog" onclick="setCategoryFilter('Replica Weapons')" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-slate-950/80 hover:bg-slate-900 border border-wano-gold/50 text-wano-gold font-bold text-sm transition-all duration-200 text-center">
                             Wano Katanas <i class="fa-solid fa-khanda ml-2"></i>
                         </a>
                     </div>
                     <!-- Wano Specs -->
-                    <div class="pt-6 border-t border-wano-purple/20 grid grid-cols-3 gap-4 text-center lg:text-left text-xs font-semibold text-slate-400">
+                    <div class="pt-6 border-t border-wano-purple/20 grid grid-cols-3 gap-4 text-center lg:text-left text-xs font-semibold text-slate-300">
                         <div><i class="fa-solid fa-shield-halved text-wano-sakura mr-1"></i> Kozuki Approved</div>
                         <div><i class="fa-solid fa-gem text-wano-gold mr-1"></i> Master Smith Steel</div>
                         <div><i class="fa-solid fa-ship text-wano-cyan mr-1"></i> Flower Capital Express</div>
@@ -363,13 +433,13 @@
 
                 <!-- Featured Wano Hero Item Card -->
                 <div class="relative flex justify-center animate-float">
-                    <div class="relative w-full max-w-md bg-gradient-to-b from-wano-night to-wano-bg p-6 rounded-3xl border border-wano-gold/40 shadow-2xl backdrop-blur-xl">
+                    <div class="relative w-full max-w-md bg-gradient-to-b from-slate-900 to-slate-950 p-6 rounded-3xl border border-wano-gold/50 shadow-2xl backdrop-blur-xl text-white">
                         <span class="absolute top-4 right-4 bg-wano-sakura text-slate-950 text-xs font-black px-3 py-1 rounded-full shadow-lg z-10 uppercase tracking-wider">
                             WANO YONKO TIER
                         </span>
                         <div class="relative h-64 sm:h-72 w-full rounded-2xl overflow-hidden mb-5 group">
                             <img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=800&auto=format&fit=crop&q=80" alt="Luffy Gear 5 Wano Edition" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-wano-bg via-transparent opacity-70"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent opacity-70"></div>
                         </div>
                         <div class="space-y-3">
                             <div class="flex justify-between items-start">
@@ -379,7 +449,7 @@
                                 </div>
                                 <div class="text-right">
                                     <p class="text-2xl font-black text-wano-gold">฿19,500</p>
-                                    <p class="text-xs text-slate-500 line-through">฿24,000</p>
+                                    <p class="text-xs text-slate-400 line-through">฿24,000</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1 text-wano-gold text-xs">
@@ -400,20 +470,20 @@
         </section>
 
         <section id="catalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-wano-purple/20 pb-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-wano-border pb-6">
                 <div>
-                    <h2 class="text-3xl sm:text-4xl font-black text-white uppercase samurai-title flex items-center gap-2">
+                    <h2 class="text-3xl sm:text-4xl font-black text-wano-text uppercase samurai-title flex items-center gap-2">
                         <i class="fa-solid fa-torii-gate text-wano-sakura"></i> Wano Kuni Merchant Catalog
                     </h2>
-                    <p class="text-slate-400 mt-1 text-sm">Official One Piece Onigashima & Wano Arc figures, Devil Fruits, Enma Katanas & Samurai Apparel.</p>
+                    <p class="text-wano-subtext mt-1 text-sm">Official One Piece Onigashima & Wano Arc figures, Devil Fruits, Enma Katanas & Samurai Apparel.</p>
                 </div>
-                <div class="text-xs font-bold text-wano-gold bg-wano-night border border-wano-purple/30 px-4 py-2 rounded-xl">
-                    Showing <span id="visible-count" class="text-white font-extrabold">0</span> Wano Artifacts
+                <div class="text-xs font-bold text-wano-gold bg-wano-night border border-wano-border px-4 py-2 rounded-xl">
+                    Showing <span id="visible-count" class="text-wano-text font-extrabold">0</span> Wano Artifacts
                 </div>
             </div>
 
             <!-- Category Pills & Toolbar -->
-            <div class="bg-wano-night p-4 rounded-2xl border border-wano-purple/30 shadow-md mb-8">
+            <div class="bg-wano-night p-4 rounded-2xl border border-wano-border shadow-md mb-8">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                     
                     <!-- Category Buttons -->
@@ -421,24 +491,24 @@
                         <button data-category="all" class="category-btn active px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-sakura text-slate-950 shadow-glow-sakura">
                             <i class="fa-solid fa-globe mr-1.5"></i> All Wano Drops
                         </button>
-                        <button data-category="Figures" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-slate-300 hover:bg-wano-purple/40">
+                        <button data-category="Figures" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-wano-text hover:bg-wano-purple/30">
                             <i class="fa-solid fa-user-shield mr-1.5"></i> Wano Figures
                         </button>
-                        <button data-category="Devil Fruits" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-slate-300 hover:bg-wano-purple/40">
+                        <button data-category="Devil Fruits" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-wano-text hover:bg-wano-purple/30">
                             <i class="fa-solid fa-apple-whole mr-1.5 text-wano-gold"></i> Devil Fruits
                         </button>
-                        <button data-category="Replica Weapons" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-slate-300 hover:bg-wano-purple/40">
+                        <button data-category="Replica Weapons" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-wano-text hover:bg-wano-purple/30">
                             <i class="fa-solid fa-khanda mr-1.5"></i> Enma & Wano Blades
                         </button>
-                        <button data-category="Apparel" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-slate-300 hover:bg-wano-purple/40">
+                        <button data-category="Apparel" class="category-btn px-4 py-2.5 rounded-xl font-bold whitespace-nowrap transition-all duration-200 bg-wano-card text-wano-text hover:bg-wano-purple/30">
                             <i class="fa-solid fa-shirt mr-1.5"></i> Wano Haori & Hoodies
                         </button>
                     </div>
 
                     <!-- Sort Controls -->
                     <div class="flex items-center gap-3 self-end lg:self-auto w-full sm:w-auto">
-                        <label for="sort-select" class="text-xs font-bold text-slate-400 whitespace-nowrap">Sort Bounty:</label>
-                        <select id="sort-select" class="bg-wano-card border border-wano-purple/30 text-slate-200 text-xs sm:text-sm rounded-xl focus:ring-wano-sakura focus:border-wano-sakura p-2.5 outline-none font-bold w-full sm:w-auto">
+                        <label for="sort-select" class="text-xs font-bold text-wano-subtext whitespace-nowrap">Sort Bounty:</label>
+                        <select id="sort-select" class="bg-wano-card border border-wano-border text-wano-text text-xs sm:text-sm rounded-xl focus:ring-wano-sakura focus:border-wano-sakura p-2.5 outline-none font-bold w-full sm:w-auto">
                             <option value="featured">Most Wanted (Wano Featured)</option>
                             <option value="price-low">Bounty: Low to High</option>
                             <option value="price-high">Bounty: High to Low</option>
@@ -453,12 +523,12 @@
             </div>
 
             <!-- Empty State -->
-            <div id="empty-state" class="hidden text-center py-16 px-4 bg-wano-night/60 rounded-3xl border border-dashed border-wano-purple/30">
+            <div id="empty-state" class="hidden text-center py-16 px-4 bg-wano-night/80 rounded-3xl border border-dashed border-wano-border">
                 <div class="w-16 h-16 bg-wano-card text-wano-gold rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
                     <i class="fa-solid fa-torii-gate"></i>
                 </div>
-                <h3 class="text-lg font-bold text-white mb-1">No Wano Artifacts Found</h3>
-                <p class="text-sm text-slate-400 mb-6 max-w-sm mx-auto">No items matched your search query in this region of Wano Kuni.</p>
+                <h3 class="text-lg font-bold text-wano-text mb-1">No Wano Artifacts Found</h3>
+                <p class="text-sm text-wano-subtext mb-6 max-w-sm mx-auto">No items matched your search query in this region of Wano Kuni.</p>
                 <button id="reset-filters-btn" class="px-5 py-2.5 bg-wano-sakura text-slate-950 font-bold rounded-xl text-xs transition-all shadow-glow-sakura">
                     Reset Log Pose Search
                 </button>
@@ -466,29 +536,29 @@
         </section>
     </main>
 
-    <div id="cart-drawer-overlay" class="fixed inset-0 bg-wano-bg/85 backdrop-blur-md z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
 
-    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[440px] bg-wano-night z-50 shadow-2xl flex flex-col transform translate-x-full cart-slide border-l border-wano-purple/30">
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[440px] bg-wano-night z-50 shadow-2xl flex flex-col transform translate-x-full cart-slide border-l border-wano-border">
         <!-- Cart Header -->
-        <div class="p-5 border-b border-wano-purple/20 flex items-center justify-between bg-wano-bg">
+        <div class="p-5 border-b border-wano-border flex items-center justify-between bg-wano-bg">
             <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl bg-gradient-to-r from-wano-purple to-wano-sakura flex items-center justify-center text-white text-sm font-bold shadow-md">
                     <i class="fa-solid fa-box-open"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-extrabold text-white samurai-title tracking-wider">Wano Treasure Chest</h2>
+                    <h2 class="text-lg font-extrabold text-wano-text samurai-title tracking-wider">Wano Treasure Chest</h2>
                     <p class="text-[10px] text-wano-gold uppercase tracking-widest font-bold">Flower Capital Shipping</p>
                 </div>
                 <span id="cart-drawer-count" class="bg-wano-sakura text-slate-950 text-xs font-black px-2 py-0.5 rounded-full">(0)</span>
             </div>
-            <button id="close-cart-btn" class="w-8 h-8 rounded-full hover:bg-wano-card text-slate-400 hover:text-white flex items-center justify-center transition-colors">
+            <button id="close-cart-btn" class="w-8 h-8 rounded-full hover:bg-wano-card text-wano-subtext hover:text-wano-text flex items-center justify-center transition-colors">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
 
         <!-- Free Berry Shipping Meter -->
-        <div class="px-5 py-3.5 bg-wano-bg/60 border-b border-wano-purple/20">
-            <div class="flex justify-between text-xs font-bold text-slate-300 mb-1.5">
+        <div class="px-5 py-3.5 bg-wano-bg/60 border-b border-wano-border">
+            <div class="flex justify-between text-xs font-bold text-wano-subtext mb-1.5">
                 <span id="shipping-progress-text">Add ฿10,000 for FREE Wano Express Delivery</span>
                 <span id="shipping-progress-percent" class="text-wano-gold">0%</span>
             </div>
@@ -503,36 +573,36 @@
         </div>
 
         <!-- Cart Summary Footer -->
-        <div class="p-5 border-t border-wano-purple/20 bg-wano-bg space-y-3">
+        <div class="p-5 border-t border-wano-border bg-wano-bg space-y-3">
             <div class="flex gap-2">
-                <input type="text" id="promo-input" placeholder="Promo code (Try: 'WANO10')" class="flex-1 px-3.5 py-2 bg-wano-night border border-wano-purple/30 rounded-xl text-xs font-bold text-white uppercase focus:outline-none focus:border-wano-sakura">
+                <input type="text" id="promo-input" placeholder="Promo code (Try: 'WANO10')" class="flex-1 px-3.5 py-2 bg-wano-night border border-wano-border rounded-xl text-xs font-bold text-wano-text uppercase focus:outline-none focus:border-wano-sakura">
                 <button id="apply-promo-btn" class="px-4 py-2 bg-wano-gold hover:bg-wano-amber text-slate-950 rounded-xl text-xs font-black transition-colors">
                     Apply
                 </button>
             </div>
-            <div id="promo-message" class="hidden text-xs text-emerald-400 font-bold flex items-center gap-1">
+            <div id="promo-message" class="hidden text-xs text-emerald-500 font-bold flex items-center gap-1">
                 <i class="fa-solid fa-circle-check"></i> 10% Wano Samurai Discount Applied!
             </div>
 
             <!-- Price Calculation Breakdown -->
-            <div class="space-y-1.5 text-xs text-slate-400 pt-2 border-t border-wano-purple/20">
+            <div class="space-y-1.5 text-xs text-wano-subtext pt-2 border-t border-wano-border">
                 <div class="flex justify-between">
                     <span>Subtotal</span>
-                    <span id="cart-subtotal" class="font-bold text-slate-200">฿0</span>
+                    <span id="cart-subtotal" class="font-bold text-wano-text">฿0</span>
                 </div>
                 <div class="flex justify-between">
                     <span>Wano Shogunate Tariff (5%)</span>
-                    <span id="cart-tax" class="font-bold text-slate-200">฿0</span>
+                    <span id="cart-tax" class="font-bold text-wano-text">฿0</span>
                 </div>
                 <div class="flex justify-between">
                     <span>Flower Capital Delivery</span>
-                    <span id="cart-shipping" class="font-bold text-slate-200">฿0</span>
+                    <span id="cart-shipping" class="font-bold text-wano-text">฿0</span>
                 </div>
                 <div id="discount-row" class="hidden flex justify-between text-wano-gold">
                     <span>Wano Discount (10%)</span>
                     <span id="cart-discount" class="font-bold">-฿0</span>
                 </div>
-                <div class="flex justify-between text-base font-black text-white pt-2 border-t border-wano-purple/20">
+                <div class="flex justify-between text-base font-black text-wano-text pt-2 border-t border-wano-border">
                     <span>Total Bounty Due</span>
                     <span id="cart-total" class="text-wano-gold text-lg">฿0</span>
                 </div>
@@ -546,21 +616,21 @@
         </div>
     </aside>
 
-    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-wano-bg/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
-        <div class="bg-wano-night rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-wano-purple/30 flex flex-col">
+    <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-wano-night rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-wano-border flex flex-col text-wano-text">
             
             <!-- Modal Header -->
-            <div class="p-6 border-b border-wano-purple/20 flex justify-between items-center bg-wano-bg">
+            <div class="p-6 border-b border-wano-border flex justify-between items-center bg-wano-bg">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-wano-purple to-wano-sakura flex items-center justify-center text-white font-bold shadow-md">
                         <i class="fa-solid fa-torii-gate"></i>
                     </div>
                     <div>
-                        <h3 class="text-xl font-extrabold text-white samurai-title">Wano Kuni Dispatch & Payment</h3>
+                        <h3 class="text-xl font-extrabold text-wano-text samurai-title">Wano Kuni Dispatch & Payment</h3>
                         <p class="text-xs text-wano-gold">Encrypted Den Den Mushi Secure Channel</p>
                     </div>
                 </div>
-                <button id="close-checkout-btn" class="w-8 h-8 rounded-full hover:bg-wano-card text-slate-400 flex items-center justify-center">
+                <button id="close-checkout-btn" class="w-8 h-8 rounded-full hover:bg-wano-card text-wano-subtext flex items-center justify-center">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -572,22 +642,22 @@
                     <h4 class="text-xs font-bold text-wano-gold uppercase tracking-wider"><i class="fa-solid fa-map-location-dot mr-1"></i> 1. Delivery Destination (Wano Region)</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Samurai Captain Name *</label>
-                            <input type="text" required value="Kozuki Alex" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Samurai Captain Name *</label>
+                            <input type="text" required value="Kozuki Alex" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Den Den Contact (Email) *</label>
-                            <input type="email" required value="alex.samurai@wano.kuni" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Den Den Contact (Email) *</label>
+                            <input type="email" required value="alex.samurai@wano.kuni" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">Docking Port / Estate Address *</label>
-                        <input type="text" required value="Kozuki Castle District, Flower Capital, Wano" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                        <label class="block text-xs font-bold text-wano-text mb-1">Docking Port / Estate Address *</label>
+                        <input type="text" required value="Kozuki Castle District, Flower Capital, Wano" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                     </div>
                     <div class="grid grid-cols-3 gap-3">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Wano Region</label>
-                            <select class="w-full px-3 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Wano Region</label>
+                            <select class="w-full px-3 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-bold text-wano-text focus:outline-none focus:border-wano-sakura">
                                 <option>Flower Capital</option>
                                 <option>Kuri Region</option>
                                 <option>Udon Region</option>
@@ -598,59 +668,59 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Province City</label>
-                            <input type="text" required value="Bakura Town" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Province City</label>
+                            <input type="text" required value="Bakura Town" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Zip Code</label>
-                            <input type="text" required value="88001" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Zip Code</label>
+                            <input type="text" required value="88001" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                         </div>
                     </div>
                 </div>
 
                 <!-- Payment Methods -->
-                <div class="space-y-3 pt-4 border-t border-wano-purple/20">
+                <div class="space-y-3 pt-4 border-t border-wano-border">
                     <h4 class="text-xs font-bold text-wano-gold uppercase tracking-wider"><i class="fa-solid fa-coins mr-1"></i> 2. Payment Bounty Options</h4>
                     <div class="grid grid-cols-3 gap-3">
                         <label class="relative border-2 border-wano-gold bg-wano-card rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer text-center">
                             <input type="radio" name="payment-method" checked class="sr-only">
                             <i class="fa-solid fa-coins text-wano-gold text-xl mb-1"></i>
-                            <span class="text-[11px] font-black text-white">Berry Gold Coins</span>
+                            <span class="text-[11px] font-black text-wano-text">Berry Gold Coins</span>
                         </label>
-                        <label class="relative border-2 border-wano-purple/30 hover:border-wano-purple rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer text-center">
+                        <label class="relative border-2 border-wano-border hover:border-wano-purple rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer text-center">
                             <input type="radio" name="payment-method" class="sr-only">
                             <i class="fa-regular fa-credit-card text-wano-cyan text-xl mb-1"></i>
-                            <span class="text-[11px] font-bold text-slate-300">Wano Shogun Card</span>
+                            <span class="text-[11px] font-bold text-wano-subtext">Wano Shogun Card</span>
                         </label>
-                        <label class="relative border-2 border-wano-purple/30 hover:border-wano-purple rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer text-center">
+                        <label class="relative border-2 border-wano-border hover:border-wano-purple rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer text-center">
                             <input type="radio" name="payment-method" class="sr-only">
                             <i class="fa-solid fa-gem text-wano-sakura text-xl mb-1"></i>
-                            <span class="text-[11px] font-bold text-slate-300">Treasure Token</span>
+                            <span class="text-[11px] font-bold text-wano-subtext">Treasure Token</span>
                         </label>
                     </div>
 
                     <div class="space-y-3 pt-2">
                         <div>
-                            <label class="block text-xs font-bold text-slate-300 mb-1">Vault Card Number</label>
-                            <input type="text" placeholder="7742 •••• •••• 9928" required value="7742 8819 0042 9928" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                            <label class="block text-xs font-bold text-wano-text mb-1">Vault Card Number</label>
+                            <input type="text" placeholder="7742 •••• •••• 9928" required value="7742 8819 0042 9928" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">Expiry Date</label>
-                                <input type="text" placeholder="MM/YY" required value="09/29" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                                <label class="block text-xs font-bold text-wano-text mb-1">Expiry Date</label>
+                                <input type="text" placeholder="MM/YY" required value="09/29" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-300 mb-1">CVV Security Code</label>
-                                <input type="password" placeholder="123" maxlength="4" required value="902" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-purple/30 rounded-xl text-xs font-medium text-white focus:outline-none focus:border-wano-sakura">
+                                <label class="block text-xs font-bold text-wano-text mb-1">CVV Security Code</label>
+                                <input type="password" placeholder="123" maxlength="4" required value="902" class="w-full px-3.5 py-2.5 bg-wano-card border border-wano-border rounded-xl text-xs font-medium text-wano-text focus:outline-none focus:border-wano-sakura">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Action Button -->
-                <div class="pt-4 border-t border-wano-purple/20 flex items-center justify-between">
+                <div class="pt-4 border-t border-wano-border flex items-center justify-between">
                     <div>
-                        <span class="text-xs text-slate-400 block">Total Berry Bounty</span>
+                        <span class="text-xs text-wano-subtext block">Total Berry Bounty</span>
                         <span id="checkout-final-price" class="text-2xl font-black text-wano-gold">฿0</span>
                     </div>
                     <button type="submit" id="pay-now-btn" class="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-wano-purple via-pink-600 to-wano-crimson text-white font-extrabold text-sm hover:shadow-glow-sakura transition-all flex items-center gap-2 uppercase tracking-wider">
@@ -663,9 +733,9 @@
     </div>
 
     <!-- Quick View Modal -->
-    <div id="quickview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-wano-bg/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
-        <div class="bg-wano-night rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-wano-purple/30 relative">
-            <button id="close-quickview-btn" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-wano-card hover:bg-wano-purple text-white flex items-center justify-center shadow-md">
+    <div id="quickview-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-wano-night rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-wano-border relative text-wano-text">
+            <button id="close-quickview-btn" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-wano-card hover:bg-wano-purple text-wano-text flex items-center justify-center shadow-md">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <div id="quickview-content" class="grid grid-cols-1 md:grid-cols-2">
@@ -674,9 +744,9 @@
         </div>
     </div>
 
-    <footer class="bg-wano-bg text-slate-400 pt-16 pb-12 mt-20 border-t border-wano-purple/20">
+    <footer class="bg-wano-night text-wano-subtext pt-16 pb-12 mt-20 border-t border-wano-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-wano-purple/20">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-wano-border">
                 
                 <!-- Brand Info -->
                 <div class="lg:col-span-2 space-y-4">
@@ -684,21 +754,21 @@
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-wano-purple to-wano-sakura flex items-center justify-center text-white shadow-glow-sakura">
                             <i class="fa-solid fa-torii-gate text-xl text-wano-gold"></i>
                         </div>
-                        <span class="text-2xl font-black tracking-wider text-white samurai-title">
+                        <span class="text-2xl font-black tracking-wider text-wano-text samurai-title">
                             FLOWER CAPITAL <span class="sakura-gradient-text">BAZAAR</span>
                         </span>
                     </a>
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-                        The official sanctuary for One Piece Wano Arc collectibles. Gear 5 statues, Kozuki Oden Enma Katanas, Kaido figures, and Wano Haori apparel.
+                    <p class="text-wano-subtext text-xs sm:text-sm leading-relaxed max-w-sm">
+                        The official sanctuary for One Piece Wano Arc collectibles. Gear 5 statues, Kozuki Oden Enma Katanas, Kaido figures, and Wano Kimono apparel.
                     </p>
                     <div class="flex items-center gap-3 pt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-wano-night hover:bg-wano-sakura hover:text-slate-950 text-white flex items-center justify-center transition-colors border border-wano-purple/30">
+                        <a href="#" class="w-9 h-9 rounded-full bg-wano-bg hover:bg-wano-sakura hover:text-slate-950 text-wano-text flex items-center justify-center transition-colors border border-wano-border">
                             <i class="fa-brands fa-youtube"></i>
                         </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-wano-night hover:bg-wano-gold hover:text-slate-950 text-white flex items-center justify-center transition-colors border border-wano-purple/30">
+                        <a href="#" class="w-9 h-9 rounded-full bg-wano-bg hover:bg-wano-gold hover:text-slate-950 text-wano-text flex items-center justify-center transition-colors border border-wano-border">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-wano-night hover:bg-wano-cyan hover:text-slate-950 text-white flex items-center justify-center transition-colors border border-wano-purple/30">
+                        <a href="#" class="w-9 h-9 rounded-full bg-wano-bg hover:bg-wano-cyan hover:text-slate-950 text-wano-text flex items-center justify-center transition-colors border border-wano-border">
                             <i class="fa-brands fa-discord"></i>
                         </a>
                     </div>
@@ -706,18 +776,18 @@
 
                 <!-- Navigation Links -->
                 <div>
-                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Wano Catalog</h4>
+                    <h4 class="text-wano-text font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Wano Catalog</h4>
                     <ul class="space-y-2.5 text-xs font-semibold">
                         <li><a href="#catalog" onclick="setCategoryFilter('Figures')" class="hover:text-wano-gold transition-colors">Wano Figures</a></li>
                         <li><a href="#catalog" onclick="setCategoryFilter('Devil Fruits')" class="hover:text-wano-gold transition-colors">Wano Devil Fruits</a></li>
                         <li><a href="#catalog" onclick="setCategoryFilter('Replica Weapons')" class="hover:text-wano-gold transition-colors">Enma & Wano Katanas</a></li>
-                        <li><a href="#catalog" onclick="setCategoryFilter('Apparel')" class="hover:text-wano-gold transition-colors">Samurai Haori Apparel</a></li>
+                        <li><a href="#catalog" onclick="setCategoryFilter('Apparel')" class="hover:text-wano-gold transition-colors">Samurai Kimono Apparel</a></li>
                     </ul>
                 </div>
 
                 <!-- Fleet Support -->
                 <div>
-                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Fleet Support</h4>
+                    <h4 class="text-wano-text font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Fleet Support</h4>
                     <ul class="space-y-2.5 text-xs font-semibold">
                         <li><a href="#" class="hover:text-wano-sakura transition-colors">Log Pose Tracking</a></li>
                         <li><a href="#" class="hover:text-wano-sakura transition-colors">Hakumai Delivery Rates</a></li>
@@ -728,10 +798,10 @@
 
                 <!-- Newsletter -->
                 <div>
-                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Wano Dispatch</h4>
-                    <p class="text-xs text-slate-400 mb-3">Subscribe for secret Wano drops and ฿1,000 Berry vouchers on new figures.</p>
+                    <h4 class="text-wano-text font-extrabold text-sm uppercase tracking-wider mb-4 samurai-title">Wano Dispatch</h4>
+                    <p class="text-xs text-wano-subtext mb-3">Subscribe for secret Wano drops and ฿1,000 Berry vouchers on new figures.</p>
                     <form onsubmit="handleNewsletterSubmit(event)" class="space-y-2">
-                        <input type="email" required placeholder="Enter your email" class="w-full px-3.5 py-2 bg-wano-night border border-wano-purple/30 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-wano-sakura font-semibold">
+                        <input type="email" required placeholder="Enter your email" class="w-full px-3.5 py-2 bg-wano-bg border border-wano-border rounded-xl text-xs text-wano-text placeholder-wano-subtext focus:outline-none focus:border-wano-sakura font-semibold">
                         <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-wano-purple to-pink-600 text-white font-black text-xs hover:opacity-90 transition-opacity uppercase tracking-wider">
                             Join Wano Alliance
                         </button>
@@ -740,9 +810,9 @@
             </div>
 
             <!-- Copyright and Badges -->
-            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-semibold">
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-wano-subtext font-semibold">
                 <p>&copy; 2026 FLOWER CAPITAL BAZAAR. Wano Kuni Official Merchandise Fan Store.</p>
-                <div class="flex items-center gap-4 text-slate-400 text-lg">
+                <div class="flex items-center gap-4 text-wano-subtext text-lg">
                     <i class="fa-solid fa-coins text-wano-gold" title="Berry Coins"></i>
                     <i class="fa-solid fa-torii-gate text-wano-sakura" title="Kozuki Seal"></i>
                     <i class="fa-solid fa-shield-halved text-wano-cyan" title="Wano Security"></i>
@@ -807,7 +877,7 @@
             },
             {
                 id: 5,
-                name: "Wano Straw Hat Alliance Embroidered Haori Hoodie",
+                name: "Wano Straw Hat Alliance Kimono & Haori Hoodie",
                 category: "Apparel",
                 price: 8200,
                 originalPrice: 9800,
@@ -816,7 +886,7 @@
                 image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
                 badge: "Samurai Wear",
                 badgeColor: "bg-wano-rose text-white",
-                description: "Heavyweight 480GSM cotton haori hoodie with Kozuki family crest and Mugiwara fleet embroidery."
+                description: "Heavyweight 480GSM cotton haori hoodie inspired by Luffy-taro, Zoro-juro, and O-Nami Wano Kuni Kimonos."
             },
             {
                 id: 6,
@@ -883,430 +953,24 @@
         const quickviewModal = document.getElementById('quickview-modal');
 
         document.addEventListener('DOMContentLoaded', () => {
+            initSystemTheme();
             renderProducts();
             setupEventListeners();
             updateCartUI();
         });
 
-        function renderProducts() {
-            let filtered = PRODUCTS.filter(product => {
-                const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
-                const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                     product.description.toLowerCase().includes(searchQuery.toLowerCase());
-                return matchesCategory && matchesSearch;
-            });
+        // SYSTEM LIGHT/DARK MODE DETECTION & TOGGLE SYSTEM
+        function initSystemTheme() {
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
 
-            if (sortBy === 'price-low') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (sortBy === 'price-high') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else if (sortBy === 'rating') {
-                filtered.sort((a, b) => b.rating - a.rating);
-            }
+            // Detect user system theme preference
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('wano-theme');
 
-            visibleCount.textContent = filtered.length;
-
-            if (filtered.length === 0) {
-                productGrid.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            productGrid.innerHTML = filtered.map(product => {
-                const isWishlisted = wishlist.includes(product.id);
-                return `
-                    <div class="glass-card rounded-3xl border border-wano-purple/30 p-4 flex flex-col justify-between group hover:border-wano-sakura/60 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-glow-sakura">
-                        <div class="relative rounded-2xl overflow-hidden bg-wano-bg mb-4 h-52">
-                            ${product.badge ? `
-                                <span class="absolute top-3 left-3 ${product.badgeColor} font-extrabold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md z-10">
-                                    ${product.badge}
-                                </span>
-                            ` : ''}
-                            
-                            <button onclick="toggleWishlist(${product.id})" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-wano-night/80 hover:bg-wano-night text-slate-300 hover:text-wano-sakura flex items-center justify-center shadow-md z-10 transition-colors">
-                                <i class="${isWishlisted ? 'fa-solid text-wano-sakura' : 'fa-regular'} fa-heart text-sm"></i>
-                            </button>
-
-                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-
-                            <!-- Quick View Overlay -->
-                            <div class="absolute inset-0 bg-wano-bg/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <button onclick="openQuickView(${product.id})" class="px-4 py-2 bg-wano-night/90 hover:bg-wano-night text-wano-gold border border-wano-gold/40 rounded-xl text-xs font-bold shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                                    <i class="fa-regular fa-eye mr-1"></i> Inspect Wano Artifact
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="space-y-2 flex-1 flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                                    <span class="font-extrabold text-wano-gold uppercase tracking-wider text-[10px]"><i class="fa-solid fa-torii-gate mr-1"></i>${product.category}</span>
-                                    <div class="flex items-center gap-1 text-wano-gold font-bold">
-                                        <i class="fa-solid fa-star text-[10px]"></i>
-                                        <span>${product.rating}</span>
-                                        <span class="text-slate-500 text-[10px]">(${product.reviews})</span>
-                                    </div>
-                                </div>
-                                <h3 class="font-bold text-white text-sm line-clamp-1 group-hover:text-wano-sakura transition-colors">
-                                    ${product.name}
-                                </h3>
-                                <p class="text-xs text-slate-400 line-clamp-2 mt-1 leading-relaxed">
-                                    ${product.description}
-                                </p>
-                            </div>
-
-                            <div class="pt-3 border-t border-wano-purple/20 flex items-center justify-between mt-3">
-                                <div>
-                                    <span class="text-base font-black text-wano-gold">฿${product.price.toLocaleString()}</span>
-                                    ${product.originalPrice ? `<span class="text-xs text-slate-500 line-through ml-1.5">฿${product.originalPrice.toLocaleString()}</span>` : ''}
-                                </div>
-                                <button onclick="addToCart(${product.id})" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-wano-purple to-pink-600 text-white hover:shadow-glow-sakura transition-all duration-200 text-xs font-bold flex items-center gap-1.5">
-                                    <i class="fa-solid fa-plus"></i> Claim
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function addToCart(productId) {
-            const product = PRODUCTS.find(p => p.id === productId);
-            if (!product) return;
-
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity += 1;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-sun text-lg text-wano-gold';
             } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-
-            updateCartUI();
-            showToast(`Added <strong>${product.name}</strong> to Wano Treasure Chest!`, 'success');
-            openCart();
-        }
-
-        function setCategoryFilter(category) {
-            activeCategory = category;
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                if(btn.dataset.category === category) {
-                    btn.classList.add('bg-wano-sakura', 'text-slate-950', 'shadow-glow-sakura');
-                    btn.classList.remove('bg-wano-card', 'text-slate-300');
-                } else {
-                    btn.classList.remove('bg-wano-sakura', 'text-slate-950', 'shadow-glow-sakura');
-                    btn.classList.add('bg-wano-card', 'text-slate-300');
-                }
-            });
-            renderProducts();
-        }
-
-        function updateQuantity(productId, delta) {
-            const item = cart.find(i => i.id === productId);
-            if (!item) return;
-
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                removeFromCart(productId);
-            } else {
-                updateCartUI();
-            }
-        }
-
-        function removeFromCart(productId) {
-            const item = cart.find(i => i.id === productId);
-            cart = cart.filter(i => i.id !== productId);
-            updateCartUI();
-            if (item) showToast(`Removed ${item.name} from treasure chest`, 'info');
-        }
-
-        function updateCartUI() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            cartBadge.textContent = totalItems;
-            document.getElementById('cart-drawer-count').textContent = `(${totalItems})`;
-            if (totalItems > 0) {
-                cartBadge.classList.remove('scale-0');
-            } else {
-                cartBadge.classList.add('scale-0');
-            }
-
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const tax = Math.round(subtotal * 0.05);
-            const isFreeShipping = subtotal >= 10000 || subtotal === 0;
-            const shipping = isFreeShipping ? 0 : 1500;
-            const discount = isPromoApplied ? Math.round(subtotal * 0.10) : 0;
-            const total = subtotal + tax + shipping - discount;
-
-            const progress = Math.min(100, (subtotal / 10000) * 100);
-            document.getElementById('shipping-progress-bar').style.width = `${progress}%`;
-            document.getElementById('shipping-progress-percent').textContent = `${Math.round(progress)}%`;
-            if (subtotal >= 10000) {
-                document.getElementById('shipping-progress-text').textContent = "🎉 FREE Flower Capital Express Delivery Unlocked!";
-            } else {
-                const diff = (10000 - subtotal).toLocaleString();
-                document.getElementById('shipping-progress-text').textContent = `Add ฿${diff} for FREE Delivery`;
-            }
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div class="text-center py-12 text-slate-500 space-y-3">
-                        <i class="fa-solid fa-box-open text-5xl text-slate-700"></i>
-                        <p class="text-sm font-bold text-slate-300">Your Wano Treasure Chest is Empty</p>
-                        <p class="text-xs text-slate-500">Add official Wano Kuni merchandise from the catalog!</p>
-                    </div>
-                `;
-            } else {
-                cartItemsContainer.innerHTML = cart.map(item => `
-                    <div class="flex items-center gap-3 p-3 bg-wano-bg rounded-2xl border border-wano-purple/30">
-                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover bg-wano-night border border-wano-purple/20">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
-                            <p class="text-xs text-wano-gold font-black mt-0.5">฿${item.price.toLocaleString()}</p>
-                            <div class="flex items-center gap-2 mt-2">
-                                <div class="flex items-center border border-wano-purple/30 bg-wano-night rounded-lg">
-                                    <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white text-xs">
-                                        <i class="fa-solid fa-minus text-[9px]"></i>
-                                    </button>
-                                    <span class="px-2 text-xs font-bold text-white">${item.quantity}</span>
-                                    <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white text-xs">
-                                        <i class="fa-solid fa-plus text-[9px]"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right flex flex-col justify-between items-end h-16">
-                            <button onclick="removeFromCart(${item.id})" class="text-slate-500 hover:text-wano-sakura text-xs p-1">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                            <span class="text-xs font-black text-wano-gold">฿${(item.price * item.quantity).toLocaleString()}</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            cartSubtotalEl.textContent = `฿${subtotal.toLocaleString()}`;
-            cartTaxEl.textContent = `฿${tax.toLocaleString()}`;
-            cartShippingEl.textContent = isFreeShipping ? 'FREE' : `฿${shipping.toLocaleString()}`;
-            cartDiscountEl.textContent = `-฿${discount.toLocaleString()}`;
-            cartTotalEl.textContent = `฿${total.toLocaleString()}`;
-            document.getElementById('checkout-final-price').textContent = `฿${total.toLocaleString()}`;
-        }
-
-        function openCart() {
-            cartDrawerOverlay.classList.remove('opacity-0', 'pointer-events-none');
-            cartDrawer.classList.remove('translate-x-full');
-        }
-
-        function closeCart() {
-            cartDrawerOverlay.classList.add('opacity-0', 'pointer-events-none');
-            cartDrawer.classList.add('translate-x-full');
-        }
-
-        function toggleWishlist(productId) {
-            if (wishlist.includes(productId)) {
-                wishlist = wishlist.filter(id => id !== productId);
-                showToast('Removed from Bounty Wishlist', 'info');
-            } else {
-                wishlist.push(productId);
-                showToast('Added to your Wano Wishlist! 🌸', 'success');
-            }
-            const wishlistCount = document.getElementById('wishlist-count');
-            wishlistCount.textContent = wishlist.length;
-            wishlistCount.style.transform = wishlist.length > 0 ? 'scale(1)' : 'scale(0)';
-            renderProducts();
-        }
-
-        function openQuickView(productId) {
-            const product = PRODUCTS.find(p => p.id === productId);
-            if (!product) return;
-
-            const content = document.getElementById('quickview-content');
-            content.innerHTML = `
-                <div class="h-64 sm:h-auto bg-wano-bg relative">
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
-                </div>
-                <div class="p-6 sm:p-8 space-y-4 flex flex-col justify-between bg-wano-night">
-                    <div>
-                        <span class="text-xs font-extrabold text-wano-gold uppercase tracking-wider"><i class="fa-solid fa-torii-gate mr-1"></i>${product.category}</span>
-                        <h3 class="text-2xl font-black text-white mt-1 samurai-title">${product.name}</h3>
-                        <div class="flex items-center gap-2 text-wano-gold text-xs font-bold mt-2">
-                            <i class="fa-solid fa-star"></i>
-                            <span>${product.rating}</span>
-                            <span class="text-slate-400 font-normal">(${product.reviews} Wano Samurai reviews)</span>
-                        </div>
-                        <p class="text-xs text-slate-300 mt-3 leading-relaxed">${product.description}</p>
-                        <div class="mt-4 flex items-baseline gap-2">
-                            <span class="text-2xl font-black text-wano-gold">฿${product.price.toLocaleString()}</span>
-                            ${product.originalPrice ? `<span class="text-sm text-slate-500 line-through">฿${product.originalPrice.toLocaleString()}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="space-y-3 pt-4 border-t border-wano-purple/20">
-                        <button onclick="addToCart(${product.id}); closeQuickView();" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-wano-purple via-pink-600 to-wano-crimson text-white font-extrabold text-xs hover:shadow-glow-sakura transition-all flex items-center justify-center gap-2 uppercase tracking-wider">
-                            <i class="fa-solid fa-box-archive"></i> Add To Treasure Chest
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            quickviewModal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeQuickView() {
-            quickviewModal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function handleCheckoutSubmit(e) {
-            e.preventDefault();
-            if (cart.length === 0) {
-                showToast('Your treasure chest is empty!', 'error');
-                return;
-            }
-
-            const btn = document.getElementById('pay-now-btn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Contacting Wano Fleet...`;
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-ship"></i> Confirm Order & Set Sail`;
-                
-                cart = [];
-                updateCartUI();
-                
-                checkoutModal.classList.add('opacity-0', 'pointer-events-none');
-                closeCart();
-
-                showToast('🎉 Order Dispatched! Den Den Mushi confirmation sent to email.', 'success');
-            }, 1800);
-        }
-
-        function handleNewsletterSubmit(e) {
-            e.preventDefault();
-            showToast('Welcome to Wano Alliance! Check email for ฿1,000 Berry code.', 'success');
-            e.target.reset();
-        }
-
-        function setupEventListeners() {
-            document.getElementById('cart-toggle-btn').addEventListener('click', openCart);
-            document.getElementById('close-cart-btn').addEventListener('click', closeCart);
-            cartDrawerOverlay.addEventListener('click', closeCart);
-
-            // WhatsApp Luffy CTA Toggle Logic
-            const waTriggerBtn = document.getElementById('whatsapp-trigger-btn');
-            const waChatCard = document.getElementById('whatsapp-chat-card');
-            const closeWaCard = document.getElementById('close-whatsapp-card');
-
-            if (waTriggerBtn && waChatCard && closeWaCard) {
-                waTriggerBtn.addEventListener('click', () => {
-                    const isHidden = waChatCard.classList.contains('hidden');
-                    if (isHidden) {
-                        waChatCard.classList.remove('hidden');
-                        setTimeout(() => {
-                            waChatCard.classList.remove('scale-95', 'opacity-0');
-                            waChatCard.classList.add('scale-100', 'opacity-100');
-                        }, 10);
-                    } else {
-                        waChatCard.classList.remove('scale-100', 'opacity-100');
-                        waChatCard.classList.add('scale-95', 'opacity-0');
-                        setTimeout(() => {
-                            waChatCard.classList.add('hidden');
-                        }, 300);
-                    }
-                });
-
-                closeWaCard.addEventListener('click', () => {
-                    waChatCard.classList.remove('scale-100', 'opacity-100');
-                    waChatCard.classList.add('scale-95', 'opacity-0');
-                    setTimeout(() => {
-                        waChatCard.classList.add('hidden');
-                    }, 300);
-                });
-            }
-
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.category-btn').forEach(b => {
-                        b.classList.remove('bg-wano-sakura', 'text-slate-950', 'shadow-glow-sakura');
-                        b.classList.add('bg-wano-card', 'text-slate-300');
-                    });
-                    const target = e.currentTarget;
-                    target.classList.remove('bg-wano-card', 'text-slate-300');
-                    target.classList.add('bg-wano-sakura', 'text-slate-950', 'shadow-glow-sakura');
-
-                    activeCategory = target.dataset.category;
-                    renderProducts();
-                });
-            });
-
-            const handleSearch = (e) => {
-                searchQuery = e.target.value;
-                renderProducts();
-            };
-            document.getElementById('desktop-search').addEventListener('input', handleSearch);
-            document.getElementById('mobile-search').addEventListener('input', handleSearch);
-
-            document.getElementById('sort-select').addEventListener('change', (e) => {
-                sortBy = e.target.value;
-                renderProducts();
-            });
-
-            document.getElementById('apply-promo-btn').addEventListener('click', () => {
-                const val = document.getElementById('promo-input').value.trim().toUpperCase();
-                if (val === 'WANO10' || val === 'MUGIWARA10') {
-                    isPromoApplied = true;
-                    discountRow.classList.remove('hidden');
-                    document.getElementById('promo-message').classList.remove('hidden');
-                    updateCartUI();
-                    showToast('10% Wano Samurai Discount applied!', 'success');
-                } else {
-                    showToast('Invalid Code. Try "WANO10"', 'error');
-                }
-            });
-
-            document.getElementById('proceed-checkout-btn').addEventListener('click', () => {
-                if (cart.length === 0) {
-                    showToast('Please add items to treasure chest first.', 'info');
-                    return;
-                }
-                checkoutModal.classList.remove('opacity-0', 'pointer-events-none');
-            });
-            document.getElementById('close-checkout-btn').addEventListener('click', () => {
-                checkoutModal.classList.add('opacity-0', 'pointer-events-none');
-            });
-            document.getElementById('close-quickview-btn').addEventListener('click', closeQuickView);
-
-            document.getElementById('reset-filters-btn').addEventListener('click', () => {
-                activeCategory = 'all';
-                searchQuery = '';
-                document.getElementById('desktop-search').value = '';
-                document.getElementById('mobile-search').value = '';
-                renderProducts();
-            });
-        }
-
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            
-            let bgBg = 'bg-wano-night text-white border-l-4 border-wano-gold';
-            if (type === 'success') bgBg = 'bg-wano-night text-white border-l-4 border-wano-sakura';
-            if (type === 'error') bgBg = 'bg-wano-night text-white border-l-4 border-wano-crimson';
-
-            toast.className = `px-4 py-3 rounded-2xl shadow-2xl text-xs font-bold flex items-center gap-2 transform translate-y-4 opacity-0 transition-all duration-300 pointer-events-auto border-y border-r border-wano-purple/30 ${bgBg}`;
-            toast.innerHTML = `<span>${message}</span>`;
-
-            container.appendChild(toast);
-
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-4', 'opacity-0');
-            });
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => toast.remove(), 300);
-            }, 3200);
-        }
-    </script>
-</body>
-</html>
+                document.documentElement.classList.remove('dark');
+                themeIcon.className
